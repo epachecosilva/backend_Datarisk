@@ -1,0 +1,110 @@
+[
+  {
+    "trimestre": "20231",
+    "nomeBandeira": "VISA",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 3050384,
+    "qtdCartoesAtivos": 1716709,
+    "qtdTransacoesNacionais": 43984902,
+    "valorTransacoesNacionais": 12846611557.78,
+    "qtdTransacoesInternacionais": 470796,
+    "valorTransacoesInternacionais": 397043258.04
+  },
+  {
+    "trimestre": "20231",
+    "nomeBandeira": "VISA",
+    "nomeFuncao": "Crédito",
+    "produto": "Intermediário",
+    "qtdCartoesEmitidos": 1543200,
+    "qtdCartoesAtivos": 987654,
+    "qtdTransacoesNacionais": 21567890,
+    "valorTransacoesNacionais": 6543210987.65,
+    "qtdTransacoesInternacionais": 123456,
+    "valorTransacoesInternacionais": 98765432.10
+  },
+  {
+    "trimestre": "20231",
+    "nomeBandeira": "Mastercard",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 2876543,
+    "qtdCartoesAtivos": 1654321,
+    "qtdTransacoesNacionais": 39876543,
+    "valorTransacoesNacionais": 11543210987.65,
+    "qtdTransacoesInternacionais": 345678,
+    "valorTransacoesInternacionais": 234567890.12
+  },
+  {
+    "trimestre": "20231",
+    "nomeBandeira": "American Express",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 876543,
+    "qtdCartoesAtivos": 543210,
+    "qtdTransacoesNacionais": 12345678,
+    "valorTransacoesNacionais": 3456789012.34,
+    "qtdTransacoesInternacionais": 98765,
+    "valorTransacoesInternacionais": 87654321.09
+  },
+  {
+    "trimestre": "20232",
+    "nomeBandeira": "VISA",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 3156789,
+    "qtdCartoesAtivos": 1789012,
+    "qtdTransacoesNacionais": 45678901,
+    "valorTransacoesNacionais": 13456789012.34,
+    "qtdTransacoesInternacionais": 489012,
+    "valorTransacoesInternacionais": 412345678.90
+  },
+  {
+    "trimestre": "20232",
+    "nomeBandeira": "Mastercard",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 2987654,
+    "qtdCartoesAtivos": 1678901,
+    "qtdTransacoesNacionais": 41234567,
+    "valorTransacoesNacionais": 12345678901.23,
+    "qtdTransacoesInternacionais": 356789,
+    "valorTransacoesInternacionais": 245678901.23
+  },
+  {
+    "trimestre": "20232",
+    "nomeBandeira": "American Express",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 901234,
+    "qtdCartoesAtivos": 567890,
+    "qtdTransacoesNacionais": 13456789,
+    "valorTransacoesNacionais": 3567890123.45,
+    "qtdTransacoesInternacionais": 101234,
+    "valorTransacoesInternacionais": 90123456.78
+  },
+  {
+    "trimestre": "20233",
+    "nomeBandeira": "VISA",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 3256789,
+    "qtdCartoesAtivos": 1854321,
+    "qtdTransacoesNacionais": 47345678,
+    "valorTransacoesNacionais": 14056789012.34,
+    "qtdTransacoesInternacionais": 507234,
+    "valorTransacoesInternacionais": 427654321.09
+  },
+  {
+    "trimestre": "20233",
+    "nomeBandeira": "Mastercard",
+    "nomeFuncao": "Crédito",
+    "produto": "Empresarial",
+    "qtdCartoesEmitidos": 3098765,
+    "qtdCartoesAtivos": 1701234,
+    "qtdTransacoesNacionais": 42567890,
+    "valorTransacoesNacionais": 13145678901.23,
+    "qtdTransacoesInternacionais": 367890,
+    "valorTransacoesInternacionais": 256789012.34
+  }
+]

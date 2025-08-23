@@ -22,6 +22,7 @@ builder.Services.AddDbContext<DatariskDbContext>(options =>
 // Repositories
 builder.Services.AddScoped<IScriptRepository, ScriptRepository>();
 builder.Services.AddScoped<IProcessingRepository, ProcessingRepository>();
+builder.Services.AddScoped<IScriptExecutionRepository, ScriptExecutionRepository>();
 
 // Services
 builder.Services.AddScoped<IScriptExecutionService, ScriptExecutionService>();

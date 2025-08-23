@@ -1,0 +1,137 @@
+[
+  {
+    "clienteId": "CLI001",
+    "nome": "João Silva",
+    "email": "joao.silva@email.com",
+    "quantidade": 1,
+    "valorCompra": 8999.99,
+    "categoria": "Eletrônicos",
+    "dataCompra": "2024-01-15T10:30:00Z"
+  },
+  {
+    "clienteId": "CLI001",
+    "nome": "João Silva",
+    "email": "joao.silva@email.com",
+    "quantidade": 1,
+    "valorCompra": 2499.99,
+    "categoria": "Eletrônicos",
+    "dataCompra": "2024-02-10T16:20:00Z"
+  },
+  {
+    "clienteId": "CLI001",
+    "nome": "João Silva",
+    "email": "joao.silva@email.com",
+    "quantidade": 1,
+    "valorCompra": 3999.99,
+    "categoria": "Eletrônicos",
+    "dataCompra": "2024-03-15T09:00:00Z"
+  },
+  {
+    "clienteId": "CLI002",
+    "nome": "Maria Santos",
+    "email": "maria.santos@email.com",
+    "quantidade": 1,
+    "valorCompra": 12999.99,
+    "categoria": "Eletrônicos",
+    "dataCompra": "2024-01-20T14:15:00Z"
+  },
+  {
+    "clienteId": "CLI002",
+    "nome": "Maria Santos",
+    "email": "maria.santos@email.com",
+    "quantidade": 1,
+    "valorCompra": 6499.99,
+    "categoria": "Eletrônicos",
+    "dataCompra": "2024-03-01T10:00:00Z"
+  },
+  {
+    "clienteId": "CLI003",
+    "nome": "Pedro Oliveira",
+    "email": "pedro.oliveira@email.com",
+    "quantidade": 2,
+    "valorCompra": 899.98,
+    "categoria": "Esportes",
+    "dataCompra": "2024-02-05T09:45:00Z"
+  },
+  {
+    "clienteId": "CLI003",
+    "nome": "Pedro Oliveira",
+    "email": "pedro.oliveira@email.com",
+    "quantidade": 1,
+    "valorCompra": 199.99,
+    "categoria": "Esportes",
+    "dataCompra": "2024-03-10T12:15:00Z"
+  },
+  {
+    "clienteId": "CLI004",
+    "nome": "Ana Costa",
+    "email": "ana.costa@email.com",
+    "quantidade": 1,
+    "valorCompra": 89.90,
+    "categoria": "Livros",
+    "dataCompra": "2024-02-12T11:30:00Z"
+  },
+  {
+    "clienteId": "CLI004",
+    "nome": "Ana Costa",
+    "email": "ana.costa@email.com",
+    "quantidade": 1,
+    "valorCompra": 99.90,
+    "categoria": "Livros",
+    "dataCompra": "2024-03-20T11:10:00Z"
+  },
+  {
+    "clienteId": "CLI005",
+    "nome": "Carlos Ferreira",
+    "email": "carlos.ferreira@email.com",
+    "quantidade": 1,
+    "valorCompra": 1299.99,
+    "categoria": "Esportes",
+    "dataCompra": "2024-02-15T13:45:00Z"
+  },
+  {
+    "clienteId": "CLI006",
+    "nome": "Lucia Rodrigues",
+    "email": "lucia.rodrigues@email.com",
+    "quantidade": 1,
+    "valorCompra": 899.99,
+    "categoria": "Eletrônicos",
+    "dataCompra": "2024-03-05T15:30:00Z"
+  },
+  {
+    "clienteId": "CLI007",
+    "nome": "Roberto Almeida",
+    "email": "roberto.almeida@email.com",
+    "quantidade": 1,
+    "valorCompra": 129.90,
+    "categoria": "Livros",
+    "dataCompra": "2024-03-12T14:20:00Z"
+  },
+  {
+    "clienteId": "CLI008",
+    "nome": "Fernanda Lima",
+    "email": "fernanda.lima@email.com",
+    "quantidade": 1,
+    "valorCompra": 599.99,
+    "categoria": "Esportes",
+    "dataCompra": "2024-03-18T16:45:00Z"
+  },
+  {
+    "clienteId": "CLI009",
+    "nome": "Ricardo Souza",
+    "email": "ricardo.souza@email.com",
+    "quantidade": 1,
+    "valorCompra": 7999.99,
+    "categoria": "Eletrônicos",
+    "dataCompra": "2024-03-25T13:30:00Z"
+  },
+  {
+    "clienteId": "CLI010",
+    "nome": "Patricia Gomes",
+    "email": "patricia.gomes@email.com",
+    "quantidade": 1,
+    "valorCompra": 3499.99,
+    "categoria": "Esportes",
+    "dataCompra": "2024-03-28T10:15:00Z"
+  }
+]

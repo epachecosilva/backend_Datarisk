@@ -1,0 +1,167 @@
+[
+  {
+    "id": 1,
+    "clienteId": "CLI001",
+    "produto": "iPhone 14 Pro",
+    "categoria": "Eletrônicos",
+    "quantidade": 1,
+    "valorVenda": 8999.99,
+    "dataVenda": "2024-01-15T10:30:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Crédito"
+  },
+  {
+    "id": 2,
+    "clienteId": "CLI002",
+    "produto": "MacBook Air M2",
+    "categoria": "Eletrônicos",
+    "quantidade": 1,
+    "valorVenda": 12999.99,
+    "dataVenda": "2024-01-20T14:15:00Z",
+    "status": "Concluída",
+    "formaPagamento": "PIX"
+  },
+  {
+    "id": 3,
+    "clienteId": "CLI003",
+    "produto": "Nike Air Max",
+    "categoria": "Esportes",
+    "quantidade": 2,
+    "valorVenda": 899.98,
+    "dataVenda": "2024-02-05T09:45:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Débito"
+  },
+  {
+    "id": 4,
+    "clienteId": "CLI001",
+    "produto": "AirPods Pro",
+    "categoria": "Eletrônicos",
+    "quantidade": 1,
+    "valorVenda": 2499.99,
+    "dataVenda": "2024-02-10T16:20:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Crédito"
+  },
+  {
+    "id": 5,
+    "clienteId": "CLI004",
+    "produto": "Livro Clean Code",
+    "categoria": "Livros",
+    "quantidade": 1,
+    "valorVenda": 89.90,
+    "dataVenda": "2024-02-12T11:30:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Boleto"
+  },
+  {
+    "id": 6,
+    "clienteId": "CLI005",
+    "produto": "Adidas Ultraboost",
+    "categoria": "Esportes",
+    "quantidade": 1,
+    "valorVenda": 1299.99,
+    "dataVenda": "2024-02-15T13:45:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Crédito"
+  },
+  {
+    "id": 7,
+    "clienteId": "CLI002",
+    "produto": "iPad Air",
+    "categoria": "Eletrônicos",
+    "quantidade": 1,
+    "valorVenda": 6499.99,
+    "dataVenda": "2024-03-01T10:00:00Z",
+    "status": "Concluída",
+    "formaPagamento": "PIX"
+  },
+  {
+    "id": 8,
+    "clienteId": "CLI006",
+    "produto": "Kindle Paperwhite",
+    "categoria": "Eletrônicos",
+    "quantidade": 1,
+    "valorVenda": 899.99,
+    "dataVenda": "2024-03-05T15:30:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Crédito"
+  },
+  {
+    "id": 9,
+    "clienteId": "CLI003",
+    "produto": "Bola de Futebol",
+    "categoria": "Esportes",
+    "quantidade": 1,
+    "valorVenda": 199.99,
+    "dataVenda": "2024-03-10T12:15:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Débito"
+  },
+  {
+    "id": 10,
+    "clienteId": "CLI007",
+    "produto": "Livro Design Patterns",
+    "categoria": "Livros",
+    "quantidade": 1,
+    "valorVenda": 129.90,
+    "dataVenda": "2024-03-12T14:20:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Boleto"
+  },
+  {
+    "id": 11,
+    "clienteId": "CLI001",
+    "produto": "Apple Watch Series 9",
+    "categoria": "Eletrônicos",
+    "quantidade": 1,
+    "valorVenda": 3999.99,
+    "dataVenda": "2024-03-15T09:00:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Crédito"
+  },
+  {
+    "id": 12,
+    "clienteId": "CLI008",
+    "produto": "Raquete de Tênis",
+    "categoria": "Esportes",
+    "quantidade": 1,
+    "valorVenda": 599.99,
+    "dataVenda": "2024-03-18T16:45:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Crédito"
+  },
+  {
+    "id": 13,
+    "clienteId": "CLI004",
+    "produto": "Livro Refactoring",
+    "categoria": "Livros",
+    "quantidade": 1,
+    "valorVenda": 99.90,
+    "dataVenda": "2024-03-20T11:10:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Boleto"
+  },
+  {
+    "id": 14,
+    "clienteId": "CLI009",
+    "produto": "Samsung Galaxy S24",
+    "categoria": "Eletrônicos",
+    "quantidade": 1,
+    "valorVenda": 7999.99,
+    "dataVenda": "2024-03-25T13:30:00Z",
+    "status": "Concluída",
+    "formaPagamento": "PIX"
+  },
+  {
+    "id": 15,
+    "clienteId": "CLI010",
+    "produto": "Bicicleta Mountain Bike",
+    "categoria": "Esportes",
+    "quantidade": 1,
+    "valorVenda": 3499.99,
+    "dataVenda": "2024-03-28T10:15:00Z",
+    "status": "Concluída",
+    "formaPagamento": "Cartão de Crédito"
+  }
+]
