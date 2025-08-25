@@ -16,6 +16,10 @@ public class ExecucoesScriptController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Obter todas as execuções de script
+    /// </summary>
+    /// <response code="200">Lista de execuções retornada com sucesso</response>
     [HttpGet]
     public async Task<IActionResult> ObterTodas()
     {
@@ -24,6 +28,11 @@ public class ExecucoesScriptController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Obter execução de script por ID
+    /// </summary>
+    /// <response code="200">Execução encontrada com sucesso</response>
+    /// <response code="404">Execução não encontrada</response>
     [HttpGet("{id}")]
     public async Task<IActionResult> ObterPorId(int id)
     {
@@ -36,6 +45,10 @@ public class ExecucoesScriptController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Obter execuções de script por categoria
+    /// </summary>
+    /// <response code="200">Lista de execuções da categoria retornada com sucesso</response>
     [HttpGet("categoria/{categoria}")]
     public async Task<IActionResult> ObterPorCategoria(string categoria)
     {
@@ -44,6 +57,11 @@ public class ExecucoesScriptController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Criar nova execução de script
+    /// </summary>
+    /// <response code="201">Execução criada com sucesso</response>
+    /// <response code="400">Dados inválidos</response>
     [HttpPost]
     public async Task<IActionResult> Criar([FromBody] CriarExecucaoScriptComando comando)
     {
@@ -58,6 +76,11 @@ public class ExecucoesScriptController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Executar teste de script por ID
+    /// </summary>
+    /// <response code="200">Teste executado com sucesso</response>
+    /// <response code="400">Erro na execução do teste</response>
     [HttpPost("{id}/executar")]
     public async Task<IActionResult> Executar(int id)
     {

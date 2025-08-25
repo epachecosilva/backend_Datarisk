@@ -13,7 +13,7 @@ Este guia demonstra o **fluxo completo** de processamento de scripts, desde a cr
 
 ---
 
-## 🗄️ Estrutura de Dados Criada
+##  Estrutura de Dados Criada
 
 ### Tabelas Principais:
 

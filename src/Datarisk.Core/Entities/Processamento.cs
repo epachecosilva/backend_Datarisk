@@ -25,6 +25,7 @@ public class Processamento
     public DateTime? ConcluidoEm { get; set; }
     
     // Navigation property
+    [System.Text.Json.Serialization.JsonIgnore]
     public Script Script { get; set; } = null!;
     
     // Helper methods
