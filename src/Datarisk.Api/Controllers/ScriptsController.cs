@@ -1,5 +1,5 @@
-using Datarisk.Application.Commands;
-using Datarisk.Application.Queries;
+using Datarisk.Application.Comandos;
+using Datarisk.Application.Consultas;
 using Datarisk.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,22 +18,22 @@ public class ScriptsController : ControllerBase
     }
 
     /// <summary>
-    /// Get all scripts
+    /// Obter todos os scripts
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Script>>> GetScripts()
+    public async Task<ActionResult<IEnumerable<Script>>> ObterScripts()
     {
-        var scripts = await _mediator.Send(new GetAllScriptsQuery());
+        var scripts = await _mediator.Send(new ObterTodosScriptsQuery());
         return Ok(scripts);
     }
 
     /// <summary>
-    /// Get script by ID
+    /// Obter script por ID
     /// </summary>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Script>> GetScript(int id)
+    public async Task<ActionResult<Script>> ObterScript(int id)
     {
-        var script = await _mediator.Send(new GetScriptQuery(id));
+        var script = await _mediator.Send(new ObterScriptQuery(id));
         if (script == null)
             return NotFound();
 
@@ -41,22 +41,22 @@ public class ScriptsController : ControllerBase
     }
 
     /// <summary>
-    /// Create a new script
+    /// Criar novo script
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<Script>> CreateScript([FromBody] CreateScriptRequest request)
+    public async Task<ActionResult<Script>> CriarScript([FromBody] CriarScriptRequest request)
     {
         try
         {
-            var command = new CreateScriptCommand
+            var comando = new CriarScriptComando
             {
-                Name = request.Name,
-                Description = request.Description,
-                Code = request.Code
+                Nome = request.Nome,
+                Descricao = request.Descricao,
+                Codigo = request.Codigo
             };
 
-            var script = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetScript), new { id = script.Id }, script);
+            var script = await _mediator.Send(comando);
+            return CreatedAtAction(nameof(ObterScript), new { id = script.Id }, script);
         }
         catch (InvalidOperationException ex)
         {
@@ -65,27 +65,27 @@ public class ScriptsController : ControllerBase
     }
 
     /// <summary>
-    /// Update an existing script
+    /// Atualizar script existente
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Script>> UpdateScript(int id, [FromBody] UpdateScriptRequest request)
+    public async Task<ActionResult<Script>> AtualizarScript(int id, [FromBody] AtualizarScriptRequest request)
     {
         try
         {
-            var existingScript = await _mediator.Send(new GetScriptQuery(id));
-            if (existingScript == null)
+            var scriptExistente = await _mediator.Send(new ObterScriptQuery(id));
+            if (scriptExistente == null)
                 return NotFound();
 
-            var command = new CreateScriptCommand
+            var comando = new CriarScriptComando
             {
-                Name = request.Name,
-                Description = request.Description,
-                Code = request.Code
+                Nome = request.Nome,
+                Descricao = request.Descricao,
+                Codigo = request.Codigo
             };
 
-            // For simplicity, we'll reuse the create command logic
-            // In a real application, you'd have a separate UpdateScriptCommand
-            var script = await _mediator.Send(command);
+            // Para simplicidade, reutilizamos a lógica de criação
+            // Em uma aplicação real, você teria um comando separado AtualizarScriptComando
+            var script = await _mediator.Send(comando);
             return Ok(script);
         }
         catch (InvalidOperationException ex)
@@ -95,30 +95,30 @@ public class ScriptsController : ControllerBase
     }
 
     /// <summary>
-    /// Delete a script
+    /// Deletar script
     /// </summary>
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteScript(int id)
+    public async Task<ActionResult> DeletarScript(int id)
     {
-        var script = await _mediator.Send(new GetScriptQuery(id));
+        var script = await _mediator.Send(new ObterScriptQuery(id));
         if (script == null)
             return NotFound();
 
-        // In a real application, you'd have a DeleteScriptCommand
+        // Em uma aplicação real, você teria um comando DeletarScriptComando
         return NoContent();
     }
 }
 
-public record CreateScriptRequest
+public record CriarScriptRequest
 {
-    public string Name { get; init; } = string.Empty;
-    public string? Description { get; init; }
-    public string Code { get; init; } = string.Empty;
+    public string Nome { get; init; } = string.Empty;
+    public string? Descricao { get; init; }
+    public string Codigo { get; init; } = string.Empty;
 }
 
-public record UpdateScriptRequest
+public record AtualizarScriptRequest
 {
-    public string Name { get; init; } = string.Empty;
-    public string? Description { get; init; }
-    public string Code { get; init; } = string.Empty;
+    public string Nome { get; init; } = string.Empty;
+    public string? Descricao { get; init; }
+    public string Codigo { get; init; } = string.Empty;
 }

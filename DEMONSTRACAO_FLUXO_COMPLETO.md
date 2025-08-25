@@ -1,4 +1,4 @@
-# 🚀 Demonstração do Fluxo Completo de Pré-processamento
+# Demonstração do Fluxo Completo de Pré-processamento
 
 Este guia demonstra o **fluxo completo** de processamento de scripts, desde a criação até a execução e versionamento.
 
@@ -20,45 +20,45 @@ Este guia demonstra o **fluxo completo** de processamento de scripts, desde a cr
 #### 1. **Scripts** (Scripts hospedados)
 ```sql
 - Id (PK)
-- Name (Nome do script)
-- Description (Descrição)
-- Code (Código JavaScript)
-- CreatedAt (Data de criação)
-- UpdatedAt (Data de atualização)
+- Nome (Nome do script)
+- Descricao (Descrição)
+- Codigo (Código JavaScript)
+- CriadoEm (Data de criação)
+- AtualizadoEm (Data de atualização)
 ```
 
-#### 2. **Processings** (Execuções de processamento)
+#### 2. **Processamentos** (Execuções de processamento)
 ```sql
 - Id (PK)
 - ScriptId (FK para Scripts)
-- InputData (Dados de entrada JSON)
-- OutputData (Dados de saída JSON)
-- Status (Pending, Running, Completed, Failed)
-- ErrorMessage (Mensagem de erro)
-- CreatedAt, StartedAt, CompletedAt (Timestamps)
+- DadosEntrada (Dados de entrada JSON)
+- DadosSaida (Dados de saída JSON)
+- Status (Pendente, Executando, Concluido, Falhou)
+- MensagemErro (Mensagem de erro)
+- CriadoEm, IniciadoEm, ConcluidoEm (Timestamps)
 ```
 
-#### 3. **ScriptExecutions** (Versionamento de testes) ⭐ **NOVO**
+#### 3. **ExecucoesScript** (Versionamento de testes) ⭐ **NOVO**
 ```sql
 - Id (PK)
-- Name (Nome do teste)
-- Description (Descrição)
-- ScriptCode (Código do script)
-- TestData (Dados de teste JSON)
-- ExpectedResult (Resultado esperado)
-- ActualResult (Resultado real)
-- IsSuccessful (Sucesso/Falha)
-- ErrorMessage (Mensagem de erro)
-- ExecutionTimeMs (Tempo de execução)
-- Category (Categoria: Banco Central, E-commerce, etc.)
-- Version (Versão do script)
-- IsActive (Ativo/Inativo)
-- ProcessingId (FK opcional para Processings)
+- Nome (Nome do teste)
+- Descricao (Descrição)
+- CodigoScript (Código do script)
+- DadosTeste (Dados de teste JSON)
+- ResultadoEsperado (Resultado esperado)
+- ResultadoReal (Resultado real)
+- Sucesso (Sucesso/Falha)
+- MensagemErro (Mensagem de erro)
+- TempoExecucaoMs (Tempo de execução)
+- Categoria (Categoria: Banco Central, E-commerce, etc.)
+- Versao (Versão do script)
+- Ativo (Ativo/Inativo)
+- ProcessamentoId (FK opcional para Processamentos)
 ```
 
 ---
 
-## 📜 Scripts de Teste Realistas
+## Scripts de Teste Realistas
 
 ### 1. **Banco Central - Estatísticas de Pagamento**
 **Arquivo:** `test-scripts/banco-central-payment-stats.js`
@@ -104,48 +104,48 @@ Este guia demonstra o **fluxo completo** de processamento de scripts, desde a cr
 
 ---
 
-## 🔄 Fluxo de Execução
+## Fluxo de Execução
 
 ### **Etapa 1: Criação do Script**
 ```bash
 POST /api/scripts
 {
-  "name": "Banco Central - Estatísticas",
-  "description": "Processa dados do Bacen",
-  "code": "function process(data) { ... }"
+  "nome": "Banco Central - Estatísticas",
+  "descricao": "Processa dados do Bacen",
+  "codigo": "function process(data) { ... }"
 }
 ```
 
 ### **Etapa 2: Criação do Teste**
 ```bash
-POST /api/scriptexecutions
+POST /api/execucoesScript
 {
-  "name": "Teste Banco Central v1",
-  "description": "Teste com dados reais",
-  "scriptCode": "function process(data) { ... }",
-  "testData": "[{...}]",
-  "category": "Banco Central"
+  "nome": "Teste Banco Central v1",
+  "descricao": "Teste com dados reais",
+  "codigoScript": "function process(data) { ... }",
+  "dadosTeste": "[{...}]",
+  "categoria": "Banco Central"
 }
 ```
 
 ### **Etapa 3: Execução do Teste**
 ```bash
-POST /api/scriptexecutions/{id}/execute
+POST /api/execucoesScript/{id}/executar
 ```
 
 ### **Etapa 4: Processamento Real**
 ```bash
-POST /api/processings
+POST /api/processamentos
 {
   "scriptId": 1,
-  "inputData": "[{...}]"
+  "dadosEntrada": "[{...}]"
 }
 ```
 
 ### **Etapa 5: Monitoramento**
 ```bash
-GET /api/processings/{id}
-GET /api/scriptexecutions/{id}
+GET /api/processamentos/{id}
+GET /api/execucoesScript/{id}
 ```
 
 ---
@@ -175,32 +175,32 @@ psql -h localhost -U postgres -d datarisk -f scripts/populate-test-data.sql
 ```json
 POST /api/scripts
 {
-  "name": "Meu Script de Teste",
-  "description": "Script personalizado",
-  "code": "function process(data) { return data.filter(item => item.ativo === true); }"
+  "nome": "Meu Script de Teste",
+  "descricao": "Script personalizado",
+  "codigo": "function process(data) { return data.filter(item => item.ativo === true); }"
 }
 ```
 
 #### **3.2 Criar Execução de Teste**
 ```json
-POST /api/scriptexecutions
+POST /api/execucoesScript
 {
-  "name": "Teste Personalizado v1",
-  "description": "Teste do meu script",
-  "scriptCode": "function process(data) { return data.filter(item => item.ativo === true); }",
-  "testData": "[{\"id\": 1, \"ativo\": true}, {\"id\": 2, \"ativo\": false}]",
-  "category": "Teste"
+  "nome": "Teste Personalizado v1",
+  "descricao": "Teste do meu script",
+  "codigoScript": "function process(data) { return data.filter(item => item.ativo === true); }",
+  "dadosTeste": "[{\"id\": 1, \"ativo\": true}, {\"id\": 2, \"ativo\": false}]",
+  "categoria": "Teste"
 }
 ```
 
 #### **3.3 Executar o Teste**
 ```bash
-POST /api/scriptexecutions/{id}/execute
+POST /api/execucoesScript/{id}/executar
 ```
 
 #### **3.4 Verificar Resultado**
 ```bash
-GET /api/scriptexecutions/{id}
+GET /api/execucoesScript/{id}
 ```
 
 ### **Passo 4: Testar com Dados Reais**
@@ -213,11 +213,11 @@ curl -X POST "http://localhost:5000/api/scripts" \
   -d @test-scripts/banco-central-payment-stats.js
 
 # Executar processamento
-curl -X POST "http://localhost:5000/api/processings" \
+curl -X POST "http://localhost:5000/api/processamentos" \
   -H "Content-Type: application/json" \
   -d '{
     "scriptId": 1,
-    "inputData": '"$(cat test-data/banco-central-payment-data.json)"'
+    "dadosEntrada": '"$(cat test-data/banco-central-payment-data.json)"'
   }'
 ```
 
@@ -229,17 +229,17 @@ curl -X POST "http://localhost:5000/api/scripts" \
   -d @test-scripts/ecommerce-sales-analysis.js
 
 # Executar processamento
-curl -X POST "http://localhost:5000/api/processings" \
+curl -X POST "http://localhost:5000/api/processamentos" \
   -H "Content-Type: application/json" \
   -d '{
     "scriptId": 2,
-    "inputData": '"$(cat test-data/ecommerce-sales-data.json)"'
+    "dadosEntrada": '"$(cat test-data/ecommerce-sales-data.json)"'
   }'
 ```
 
 ---
 
-## 🔄 Versionamento de Scripts
+## Versionamento de Scripts
 
 ### **Conceito:**
 - Cada script pode ter múltiplas versões
@@ -288,21 +288,21 @@ function process(data) {
 ### **API de Versionamento:**
 ```bash
 # Listar todas as versões de um script
-GET /api/scriptexecutions?name=MeuScript
+GET /api/execucoesScript?nome=MeuScript
 
 # Executar versão específica
-POST /api/scriptexecutions/{id}/execute
+POST /api/execucoesScript/{id}/executar
 
 # Desativar versão
-PUT /api/scriptexecutions/{id}
+PUT /api/execucoesScript/{id}
 {
-  "isActive": false
+  "ativo": false
 }
 ```
 
 ---
 
-## 📊 Monitoramento e Resultados
+## Monitoramento e Resultados
 
 ### **Métricas Coletadas:**
 
@@ -327,12 +327,12 @@ PUT /api/scriptexecutions/{id}
 ```json
 {
   "id": 1,
-  "name": "Teste Banco Central v1",
-  "category": "Banco Central",
-  "version": 1,
-  "isSuccessful": true,
-  "executionTimeMs": 45.2,
-  "actualResult": [
+  "nome": "Teste Banco Central v1",
+  "categoria": "Banco Central",
+  "versao": 1,
+  "sucesso": true,
+  "tempoExecucaoMs": 45.2,
+  "resultadoReal": [
     {
       "trimestre": "20231",
       "nomeBandeira": "VISA",
@@ -342,7 +342,7 @@ PUT /api/scriptexecutions/{id}
       "valorTransacoesNacionais": 12846611557.78
     }
   ],
-  "executedAt": "2024-01-15T10:30:00Z"
+  "executadoEm": "2024-01-15T10:30:00Z"
 }
 ```
 
@@ -350,55 +350,12 @@ PUT /api/scriptexecutions/{id}
 ```json
 {
   "id": 2,
-  "name": "Teste com Erro v1",
-  "category": "Teste",
-  "version": 1,
-  "isSuccessful": false,
-  "executionTimeMs": 12.5,
-  "errorMessage": "Script execution failed: Property 'filter' of object is not a function",
-  "executedAt": "2024-01-15T10:35:00Z"
+  "nome": "Teste com Erro v1",
+  "categoria": "Teste",
+  "versao": 1,
+  "sucesso": false,
+  "tempoExecucaoMs": 12.5,
+  "mensagemErro": "Falha na execução do script: Property 'filter' of object is not a function",
+  "executadoEm": "2024-01-15T10:35:00Z"
 }
 ```
-
----
-
-## 🎯 Benefícios da Implementação
-
-### **1. Rastreabilidade Completa**
-- Histórico de todas as execuções
-- Versionamento automático
-- Comparação entre versões
-
-### **2. Qualidade de Dados**
-- Testes automatizados
-- Validação de scripts
-- Dados de teste realistas
-
-### **3. Monitoramento em Tempo Real**
-- Status de execução
-- Métricas de performance
-- Alertas de erro
-
-### **4. Flexibilidade**
-- Múltiplas categorias
-- Scripts personalizados
-- Dados de teste variados
-
-### **5. Escalabilidade**
-- Execução assíncrona
-- Sandboxing seguro
-- Versionamento robusto
-
----
-
-## 🚀 Próximos Passos
-
-1. **Executar a demonstração completa**
-2. **Testar com seus próprios scripts**
-3. **Analisar os resultados no banco**
-4. **Explorar o versionamento**
-5. **Criar novos casos de uso**
-
----
-
-**🎉 Parabéns!** Você agora tem um ambiente completo de MLOps para pré-processamento de dados com scripts realistas, versionamento e monitoramento completo!

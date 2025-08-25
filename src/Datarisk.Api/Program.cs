@@ -1,6 +1,6 @@
 using Datarisk.Api.Controllers;
-using Datarisk.Application.Commands;
-using Datarisk.Application.Queries;
+using Datarisk.Application.Comandos;
+using Datarisk.Application.Consultas;
 using Datarisk.Application.Services;
 using Datarisk.Core.Interfaces;
 using Datarisk.Infrastructure.Data;
@@ -16,20 +16,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Database
-builder.Services.AddDbContext<DatariskDbContext>(options =>
+builder.Services.AddDbContext<ContextoDatarisk>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Repositories
-builder.Services.AddScoped<IScriptRepository, ScriptRepository>();
-builder.Services.AddScoped<IProcessingRepository, ProcessingRepository>();
-builder.Services.AddScoped<IScriptExecutionRepository, ScriptExecutionRepository>();
+builder.Services.AddScoped<IRepositorioScript, RepositorioScript>();
+builder.Services.AddScoped<IRepositorioProcessamento, RepositorioProcessamento>();
+builder.Services.AddScoped<IRepositorioExecucaoScript, RepositorioExecucaoScript>();
 
 // Services
-builder.Services.AddScoped<IScriptExecutionService, ScriptExecutionService>();
+builder.Services.AddScoped<IServicoExecucaoScript, ServicoExecucaoScript>();
 
 // MediatR
 builder.Services.AddMediatR(cfg => {
-    cfg.RegisterServicesFromAssembly(typeof(CreateScriptCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(CriarScriptComando).Assembly);
 });
 
 // CORS
@@ -60,7 +60,7 @@ app.MapControllers();
 // Ensure database is created
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<DatariskDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<ContextoDatarisk>();
     context.Database.EnsureCreated();
 }
 

@@ -73,20 +73,20 @@ dotnet run --project src/Datarisk.Api
 curl -X POST "http://localhost:5000/api/scripts" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "processamento-cartoes-empresariais",
-    "description": "Processa dados de cartões empresariais do Bacen",
-    "code": "function process(data) { const corporativeData = data.filter(item => item.produto === \"Empresarial\"); const byQuarterAndIssuer = corporativeData.reduce((acc, item) => { const key = `${item.trimestre}-${item.nomeBandeira}`; if (!acc[key]) { acc[key] = { trimestre: item.trimestre, nomeBandeira: item.nomeBandeira, qtdCartoesEmitidos: 0, qtdCartoesAtivos: 0, qtdTransacoesNacionais: 0, valorTransacoesNacionais: 0, }; } acc[key].qtdCartoesEmitidos += item.qtdCartoesEmitidos; acc[key].qtdCartoesAtivos += item.qtdCartoesAtivos; acc[key].qtdTransacoesNacionais += item.qtdTransacoesNacionais; acc[key].valorTransacoesNacionais += item.valorTransacoesNacionais; return acc; }, {}); return Object.values(byQuarterAndIssuer); }"
+    "nome": "processamento-cartoes-empresariais",
+    "descricao": "Processa dados de cartões empresariais do Bacen",
+    "codigo": "function process(data) { const corporativeData = data.filter(item => item.produto === \"Empresarial\"); const byQuarterAndIssuer = corporativeData.reduce((acc, item) => { const key = `${item.trimestre}-${item.nomeBandeira}`; if (!acc[key]) { acc[key] = { trimestre: item.trimestre, nomeBandeira: item.nomeBandeira, qtdCartoesEmitidos: 0, qtdCartoesAtivos: 0, qtdTransacoesNacionais: 0, valorTransacoesNacionais: 0, }; } acc[key].qtdCartoesEmitidos += item.qtdCartoesEmitidos; acc[key].qtdCartoesAtivos += item.qtdCartoesAtivos; acc[key].qtdTransacoesNacionais += item.qtdTransacoesNacionais; acc[key].valorTransacoesNacionais += item.valorTransacoesNacionais; return acc; }, {}); return Object.values(byQuarterAndIssuer); }"
   }'
 ```
 
 ### 2. Executar Pré-processamento
 
 ```bash
-curl -X POST "http://localhost:5000/api/processings" \
+curl -X POST "http://localhost:5000/api/processamentos" \
   -H "Content-Type: application/json" \
   -d '{
     "scriptId": "1",
-    "data": [
+    "dadosEntrada": [
       {
         "trimestre": "20231",
         "nomeBandeira": "American Express",
@@ -118,7 +118,7 @@ curl -X POST "http://localhost:5000/api/processings" \
 ### 3. Consultar Status e Resultado
 
 ```bash
-curl -X GET "http://localhost:5000/api/processings/{processingId}"
+curl -X GET "http://localhost:5000/api/processamentos/{processingId}"
 ```
 
 ## Endpoints da API

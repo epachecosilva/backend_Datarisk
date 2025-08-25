@@ -10,9 +10,9 @@ Primeiro, vamos hospedar o script JavaScript que processa os dados:
 curl -X POST "http://localhost:5000/api/scripts" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "processamento-cartoes-empresariais",
-    "description": "Processa dados de cartões empresariais do Bacen - filtra apenas cartões empresariais e agrupa por trimestre e bandeira",
-    "code": "function process(data) { const corporativeData = data.filter(item => item.produto === \"Empresarial\"); const byQuarterAndIssuer = corporativeData.reduce((acc, item) => { const key = `${item.trimestre}-${item.nomeBandeira}`; if (!acc[key]) { acc[key] = { trimestre: item.trimestre, nomeBandeira: item.nomeBandeira, qtdCartoesEmitidos: 0, qtdCartoesAtivos: 0, qtdTransacoesNacionais: 0, valorTransacoesNacionais: 0, }; } acc[key].qtdCartoesEmitidos += item.qtdCartoesEmitidos; acc[key].qtdCartoesAtivos += item.qtdCartoesAtivos; acc[key].qtdTransacoesNacionais += item.qtdTransacoesNacionais; acc[key].valorTransacoesNacionais += item.valorTransacoesNacionais; return acc; }, {}); return Object.values(byQuarterAndIssuer); }"
+    "nome": "processamento-cartoes-empresariais",
+    "descricao": "Processa dados de cartões empresariais do Bacen - filtra apenas cartões empresariais e agrupa por trimestre e bandeira",
+    "codigo": "function process(data) { const corporativeData = data.filter(item => item.produto === \"Empresarial\"); const byQuarterAndIssuer = corporativeData.reduce((acc, item) => { const key = `${item.trimestre}-${item.nomeBandeira}`; if (!acc[key]) { acc[key] = { trimestre: item.trimestre, nomeBandeira: item.nomeBandeira, qtdCartoesEmitidos: 0, qtdCartoesAtivos: 0, qtdTransacoesNacionais: 0, valorTransacoesNacionais: 0, }; } acc[key].qtdCartoesEmitidos += item.qtdCartoesEmitidos; acc[key].qtdCartoesAtivos += item.qtdCartoesAtivos; acc[key].qtdTransacoesNacionais += item.qtdTransacoesNacionais; acc[key].valorTransacoesNacionais += item.valorTransacoesNacionais; return acc; }, {}); return Object.values(byQuarterAndIssuer); }"
   }'
 ```
 
@@ -20,11 +20,11 @@ curl -X POST "http://localhost:5000/api/scripts" \
 ```json
 {
   "id": 1,
-  "name": "processamento-cartoes-empresariais",
-  "description": "Processa dados de cartões empresariais do Bacen - filtra apenas cartões empresariais e agrupa por trimestre e bandeira",
-  "code": "function process(data) { ... }",
-  "createdAt": "2024-01-15T10:30:00Z",
-  "updatedAt": null
+  "nome": "processamento-cartoes-empresariais",
+  "descricao": "Processa dados de cartões empresariais do Bacen - filtra apenas cartões empresariais e agrupa por trimestre e bandeira",
+  "codigo": "function process(data) { ... }",
+  "criadoEm": "2024-01-15T10:30:00Z",
+  "atualizadoEm": null
 }
 ```
 
@@ -33,11 +33,11 @@ curl -X POST "http://localhost:5000/api/scripts" \
 Agora vamos enviar os dados do Banco Central para processamento:
 
 ```bash
-curl -X POST "http://localhost:5000/api/processings" \
+curl -X POST "http://localhost:5000/api/processamentos" \
   -H "Content-Type: application/json" \
   -d '{
     "scriptId": 1,
-    "inputData": [
+    "dadosEntrada": [
       {
         "trimestre": "20231",
         "nomeBandeira": "American Express",
@@ -61,18 +61,6 @@ curl -X POST "http://localhost:5000/api/processings" \
         "valorTransacoesNacionais": 12846611557.78,
         "qtdTransacoesInternacionais": 470796,
         "valorTransacoesInternacionais": 397043258.04
-      },
-      {
-        "trimestre": "20232",
-        "nomeBandeira": "Mastercard",
-        "nomeFuncao": "Crédito",
-        "produto": "Empresarial",
-        "qtdCartoesEmitidos": 2150384,
-        "qtdCartoesAtivos": 1216709,
-        "qtdTransacoesNacionais": 33984902,
-        "valorTransacoesNacionais": 9846611557.78,
-        "qtdTransacoesInternacionais": 370796,
-        "valorTransacoesInternacionais": 297043258.04
       }
     ]
   }'
@@ -83,20 +71,20 @@ curl -X POST "http://localhost:5000/api/processings" \
 {
   "id": 1,
   "scriptId": 1,
-  "inputData": "[...]",
-  "outputData": null,
-  "errorMessage": null,
-  "status": "Pending",
-  "createdAt": "2024-01-15T10:35:00Z",
-  "startedAt": null,
-  "completedAt": null,
+  "dadosEntrada": "[...]",
+  "dadosSaida": null,
+  "mensagemErro": null,
+  "status": "Pendente",
+  "criadoEm": "2024-01-15T10:35:00Z",
+  "iniciadoEm": null,
+  "concluidoEm": null,
   "script": {
     "id": 1,
-    "name": "processamento-cartoes-empresariais",
-    "description": "Processa dados de cartões empresariais do Bacen...",
-    "code": "function process(data) { ... }",
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": null
+    "nome": "processamento-cartoes-empresariais",
+    "descricao": "Processa dados de cartões empresariais do Bacen...",
+    "codigo": "function process(data) { ... }",
+    "criadoEm": "2024-01-15T10:30:00Z",
+    "atualizadoEm": null
   }
 }
 ```
@@ -106,7 +94,7 @@ curl -X POST "http://localhost:5000/api/processings" \
 Vamos verificar o status do processamento:
 
 ```bash
-curl -X GET "http://localhost:5000/api/processings/1"
+curl -X GET "http://localhost:5000/api/processamentos/1"
 ```
 
 **Resposta esperada (processamento em andamento):**
@@ -114,20 +102,20 @@ curl -X GET "http://localhost:5000/api/processings/1"
 {
   "id": 1,
   "scriptId": 1,
-  "inputData": "[...]",
-  "outputData": null,
-  "errorMessage": null,
-  "status": "Running",
-  "createdAt": "2024-01-15T10:35:00Z",
-  "startedAt": "2024-01-15T10:35:05Z",
-  "completedAt": null,
+  "dadosEntrada": "[...]",
+  "dadosSaida": null,
+  "mensagemErro": null,
+  "status": "Executando",
+  "criadoEm": "2024-01-15T10:35:00Z",
+  "iniciadoEm": "2024-01-15T10:35:05Z",
+  "concluidoEm": null,
   "script": {
     "id": 1,
-    "name": "processamento-cartoes-empresariais",
-    "description": "Processa dados de cartões empresariais do Bacen...",
-    "code": "function process(data) { ... }",
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": null
+    "nome": "processamento-cartoes-empresariais",
+    "descricao": "Processa dados de cartões empresariais do Bacen...",
+    "codigo": "function process(data) { ... }",
+    "criadoEm": "2024-01-15T10:30:00Z",
+    "atualizadoEm": null
   }
 }
 ```
@@ -137,8 +125,8 @@ curl -X GET "http://localhost:5000/api/processings/1"
 {
   "id": 1,
   "scriptId": 1,
-  "inputData": "[...]",
-  "outputData": [
+  "dadosEntrada": "[...]",
+  "dadosSaida": [
     {
       "trimestre": "20232",
       "nomeBandeira": "VISA",
@@ -156,18 +144,18 @@ curl -X GET "http://localhost:5000/api/processings/1"
       "valorTransacoesNacionais": 9846611557.78
     }
   ],
-  "errorMessage": null,
-  "status": "Completed",
-  "createdAt": "2024-01-15T10:35:00Z",
-  "startedAt": "2024-01-15T10:35:05Z",
-  "completedAt": "2024-01-15T10:35:10Z",
+  "mensagemErro": null,
+  "status": "Concluido",
+  "criadoEm": "2024-01-15T10:35:00Z",
+  "iniciadoEm": "2024-01-15T10:35:05Z",
+  "concluidoEm": "2024-01-15T10:35:10Z",
   "script": {
     "id": 1,
-    "name": "processamento-cartoes-empresariais",
-    "description": "Processa dados de cartões empresariais do Bacen...",
-    "code": "function process(data) { ... }",
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": null
+    "nome": "processamento-cartoes-empresariais",
+    "descricao": "Processa dados de cartões empresariais do Bacen...",
+    "codigo": "function process(data) { ... }",
+    "criadoEm": "2024-01-15T10:30:00Z",
+    "atualizadoEm": null
   }
 }
 ```
@@ -191,17 +179,9 @@ O script processou os dados e retornou:
 Para ver todos os processamentos de um script específico:
 
 ```bash
-curl -X GET "http://localhost:5000/api/processings/script/1"
+curl -X GET "http://localhost:5000/api/processamentos/script/1"
 ```
 
 ## 6. Documentação da API
 
 Acesse a documentação Swagger em: `http://localhost:5000/swagger`
-
-## Observações
-
-- O processamento é **assíncrono** - o status muda de `Pending` → `Running` → `Completed`
-- Dados de entrada e saída são armazenados como JSON
-- Timestamps são registrados para auditoria
-- Erros são capturados e armazenados no campo `errorMessage`
-- O script é validado antes da execução

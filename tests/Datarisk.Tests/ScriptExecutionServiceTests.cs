@@ -7,11 +7,11 @@ namespace Datarisk.Tests;
 
 public class ScriptExecutionServiceTests
 {
-    private readonly IScriptExecutionService _service;
+    private readonly IServicoExecucaoScript _service;
 
     public ScriptExecutionServiceTests()
     {
-        _service = new ScriptExecutionService();
+        _service = new ServicoExecucaoScript();
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public class ScriptExecutionServiceTests
         ";
 
         // Act
-        var result = await _service.ValidateScriptAsync(validScript);
+        var result = await _service.ValidarScriptAsync(validScript);
 
         // Assert
         result.Should().BeTrue();
@@ -42,7 +42,7 @@ public class ScriptExecutionServiceTests
         ";
 
         // Act
-        var result = await _service.ValidateScriptAsync(invalidScript);
+        var result = await _service.ValidarScriptAsync(invalidScript);
 
         // Assert
         result.Should().BeFalse();
@@ -59,7 +59,7 @@ public class ScriptExecutionServiceTests
         ";
 
         // Act
-        var result = await _service.ValidateScriptAsync(invalidScript);
+        var result = await _service.ValidarScriptAsync(invalidScript);
 
         // Assert
         result.Should().BeFalse();
@@ -91,7 +91,7 @@ public class ScriptExecutionServiceTests
         ]";
 
         // Act
-        var result = await _service.ExecuteScriptAsync(script, inputData);
+        var result = await _service.ExecutarScriptAsync(script, inputData);
 
         // Assert
         result.Should().NotBeNullOrEmpty();
@@ -144,7 +144,7 @@ public class ScriptExecutionServiceTests
         ]";
 
         // Act
-        var result = await _service.ExecuteScriptAsync(script, inputData);
+        var result = await _service.ExecutarScriptAsync(script, inputData);
 
         // Assert
         result.Should().NotBeNullOrEmpty();
@@ -166,6 +166,6 @@ public class ScriptExecutionServiceTests
 
         // Act & Assert
         await Assert.ThrowsAsync<InvalidOperationException>(() => 
-            _service.ExecuteScriptAsync(script, invalidData));
+            _service.ExecutarScriptAsync(script, invalidData));
     }
 }

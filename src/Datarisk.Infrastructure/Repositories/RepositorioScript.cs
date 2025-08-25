@@ -5,41 +5,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Datarisk.Infrastructure.Repositories;
 
-public class ScriptRepository : IScriptRepository
+public class RepositorioScript : IRepositorioScript
 {
-    private readonly DatariskDbContext _context;
+    private readonly ContextoDatarisk _context;
 
-    public ScriptRepository(DatariskDbContext context)
+    public RepositorioScript(ContextoDatarisk context)
     {
         _context = context;
     }
 
-    public async Task<Script?> GetByIdAsync(int id)
+    public async Task<IEnumerable<Script>> ObterTodosAsync()
     {
-        return await _context.Scripts.FindAsync(id);
+        return await _context.Scripts
+            .OrderByDescending(s => s.CriadoEm)
+            .ToListAsync();
     }
 
-    public async Task<IEnumerable<Script>> GetAllAsync()
+    public async Task<Script?> ObterPorIdAsync(int id)
     {
-        return await _context.Scripts.ToListAsync();
+        return await _context.Scripts
+            .FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Script> CreateAsync(Script script)
+    public async Task<Script> CriarAsync(Script script)
     {
         _context.Scripts.Add(script);
         await _context.SaveChangesAsync();
         return script;
     }
 
-    public async Task<Script> UpdateAsync(Script script)
+    public async Task<Script> AtualizarAsync(Script script)
     {
-        script.UpdatedAt = DateTime.UtcNow;
         _context.Scripts.Update(script);
         await _context.SaveChangesAsync();
         return script;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeletarAsync(int id)
     {
         var script = await _context.Scripts.FindAsync(id);
         if (script != null)
@@ -49,7 +51,7 @@ public class ScriptRepository : IScriptRepository
         }
     }
 
-    public async Task<bool> ExistsAsync(int id)
+    public async Task<bool> ExisteAsync(int id)
     {
         return await _context.Scripts.AnyAsync(s => s.Id == id);
     }

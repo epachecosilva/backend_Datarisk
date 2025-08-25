@@ -8,18 +8,18 @@ public class Script
     
     [Required]
     [MaxLength(100)]
-    public string Name { get; set; } = string.Empty;
+    public string Nome { get; set; } = string.Empty;
     
     [MaxLength(500)]
-    public string? Description { get; set; }
+    public string? Descricao { get; set; }
     
     [Required]
-    public string Code { get; set; } = string.Empty;
+    public string Codigo { get; set; } = string.Empty;
     
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
     
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? AtualizadoEm { get; set; }
     
     // Navigation property
-    public ICollection<Processing> Processings { get; set; } = new List<Processing>();
+    public ICollection<Processamento> Processamentos { get; set; } = new List<Processamento>();
 }
