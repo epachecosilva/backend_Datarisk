@@ -2,7 +2,7 @@
 
 Este guia demonstra o **fluxo completo** de processamento de scripts, desde a criação até a execução e versionamento.
 
-## 📋 Índice
+##  Índice
 
 1. [Estrutura de Dados Criada](#estrutura-de-dados-criada)
 2. [Scripts de Teste Realistas](#scripts-de-teste-realistas)
@@ -150,7 +150,7 @@ GET /api/execucoesScript/{id}
 
 ---
 
-## 🧪 Demonstração Prática
+##  Demonstração Prática
 
 ### **Passo 1: Iniciar a Aplicação**
 ```bash

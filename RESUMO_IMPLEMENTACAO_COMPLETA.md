@@ -1,7 +1,7 @@
 # Resumo da Implementação Completa - Datarisk MLOps
 
 ## Visão Geral
-Este documento resume a implementação completa do backend REST API para o desafio Datarisk MLOps, incluindo a refatoração para português com manutenção da terminologia "Scripts".
+Este documento resume a implementação completa do backend REST API para o desafio Datarisk MLOps
 
 ## Arquitetura Implementada
 
@@ -25,7 +25,7 @@ Datarisk/
 
 ## Entidades Principais
 
-### 1. Script (Mantido)
+### 1. Script
 ```csharp
 public class Script
 {
@@ -166,7 +166,6 @@ public class ExecucoesScriptController : ControllerBase
 
 ### 2. Execução de Scripts
 - **Jint**: Motor JavaScript para execução segura
-- **Sandboxing**: Execução isolada e segura
 - **Validação**: Verificação de sintaxe antes da execução
 
 ### 3. Processamento Assíncrono
@@ -244,19 +243,16 @@ public class ExecucoesScriptController : ControllerBase
 ## Status da Implementação
 
 ### Concluído
-- [x] Arquitetura base implementada
-- [x] Entidades e relacionamentos
-- [x] Repositórios e serviços
-- [x] Comandos e consultas MediatR
-- [x] Controllers da API
-- [x] Execução de scripts JavaScript
-- [x] Processamento assíncrono
-- [x] Testes unitários
-- [x] Dados de teste realistas
-- [x] Documentação completa
-- [x] Containerização Docker
-- [x] Refatoração para português
-- [x] Manutenção da terminologia "Scripts"
+- ✅ Arquitetura base implementada
+- ✅ Entidades e relacionamentos
+- ✅ Repositórios e serviços
+- ✅ Controllers da API
+- ✅ Execução de scripts JavaScript
+- ✅ Processamento assíncrono
+- ✅ Testes unitários
+- ✅ Dados de teste realistas
+- ✅ Documentação completa
+- ✅ Containerização Docker
 
 ### Funcionalidades Principais
 - ✅ CRUD completo para Scripts, Processamentos e Execuções
