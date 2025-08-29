@@ -17,51 +17,42 @@ public class ScriptExecutionServiceTests
     [Fact]
     public async Task ValidateScript_WithValidScript_ShouldReturnTrue()
     {
-        // Arrange
         var validScript = @"
             function process(data) {
                 return data.filter(item => item.produto === 'Empresarial');
             }
         ";
 
-        // Act
         var result = await _service.ValidarScriptAsync(validScript);
 
-        // Assert
         result.Should().BeTrue();
     }
 
     [Fact]
     public async Task ValidateScript_WithInvalidScript_ShouldReturnFalse()
     {
-        // Arrange
         var invalidScript = @"
             function invalidFunction(data) {
                 return data;
             }
         ";
 
-        // Act
         var result = await _service.ValidarScriptAsync(invalidScript);
 
-        // Assert
         result.Should().BeFalse();
     }
 
     [Fact]
     public async Task ValidateScript_WithSyntaxError_ShouldReturnFalse()
     {
-        // Arrange
         var invalidScript = @"
             function process(data) {
                 return data.filter(item => item.produto === 'Empresarial';
             }
         ";
 
-        // Act
         var result = await _service.ValidarScriptAsync(invalidScript);
 
-        // Assert
         result.Should().BeFalse();
     }
 
@@ -102,7 +93,6 @@ public class ScriptExecutionServiceTests
     [Fact]
     public async Task ExecuteScript_WithComplexScript_ShouldProcessDataCorrectly()
     {
-        // Arrange
         var script = @"
             function process(data) {
                 const corporativeData = data.filter(item => item.produto === 'Empresarial');
@@ -143,10 +133,8 @@ public class ScriptExecutionServiceTests
             }
         ]";
 
-        // Act
         var result = await _service.ExecutarScriptAsync(script, inputData);
 
-        // Assert
         result.Should().NotBeNullOrEmpty();
         result.Should().Contain("1500"); // Total qtdCartoesEmitidos
         result.Should().Contain("1200"); // Total qtdCartoesAtivos
@@ -155,7 +143,6 @@ public class ScriptExecutionServiceTests
     [Fact]
     public async Task ExecuteScript_WithInvalidData_ShouldThrowException()
     {
-        // Arrange
         var script = @"
             function process(data) {
                 return data.filter(item => item.produto === 'Empresarial');
@@ -164,7 +151,6 @@ public class ScriptExecutionServiceTests
 
         var invalidData = "invalid json";
 
-        // Act & Assert
         await Assert.ThrowsAsync<InvalidOperationException>(() => 
             _service.ExecutarScriptAsync(script, invalidData));
     }

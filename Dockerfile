@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -20,4 +20,6 @@ RUN dotnet publish "Datarisk.Api.csproj" -c Release -o /app/publish /p:UseAppHos
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# Copiar pasta test-data para dentro do container
+COPY test-data /app/test-data
 ENTRYPOINT ["dotnet", "Datarisk.Api.dll"]

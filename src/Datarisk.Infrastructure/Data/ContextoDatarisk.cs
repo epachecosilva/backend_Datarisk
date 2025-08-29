@@ -17,7 +17,6 @@ public class ContextoDatarisk : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Script configuration
         modelBuilder.Entity<Script>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -27,7 +26,7 @@ public class ContextoDatarisk : DbContext
             entity.Property(e => e.CriadoEm).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.AtualizadoEm).HasColumnType("timestamp with time zone");
             
-            // Configurar conversores de DateTime para garantir UTC
+            // Configura de DateTime para UTC
             entity.Property(e => e.CriadoEm).HasConversion(
                 v => v.ToUniversalTime(),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
@@ -36,7 +35,6 @@ public class ContextoDatarisk : DbContext
                 v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : (DateTime?)null);
         });
 
-        // Processamento configuration
         modelBuilder.Entity<Processamento>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -46,7 +44,6 @@ public class ContextoDatarisk : DbContext
             entity.Property(e => e.IniciadoEm).HasColumnType("timestamp with time zone");
             entity.Property(e => e.ConcluidoEm).HasColumnType("timestamp with time zone");
             
-            // Configurar conversores de DateTime para garantir UTC
             entity.Property(e => e.CriadoEm).HasConversion(
                 v => v.ToUniversalTime(),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
@@ -63,7 +60,7 @@ public class ContextoDatarisk : DbContext
                   .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // ExecucaoScript configuration
+        // ExecucaoScript 
         modelBuilder.Entity<ExecucaoScript>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -77,8 +74,7 @@ public class ContextoDatarisk : DbContext
             entity.Property(e => e.TempoExecucaoMs).IsRequired(false);
             entity.Property(e => e.CriadoEm).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.ExecutadoEm).HasColumnType("timestamp with time zone");
-            
-            // Configurar conversores de DateTime para garantir UTC
+       
             entity.Property(e => e.CriadoEm).HasConversion(
                 v => v.ToUniversalTime(),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc));

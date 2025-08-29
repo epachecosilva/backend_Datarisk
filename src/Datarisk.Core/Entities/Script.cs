@@ -20,7 +20,6 @@ public class Script
     
     public DateTime? AtualizadoEm { get; set; }
     
-    // Navigation property
     [System.Text.Json.Serialization.JsonIgnore]
     public ICollection<Processamento> Processamentos { get; set; } = new List<Processamento>();
 }

@@ -4,6 +4,7 @@ using Datarisk.Core.Entities;
 using Datarisk.Api.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Datarisk.Api.Controllers;
 
@@ -58,51 +59,54 @@ public class ProcessamentosController : ControllerBase
 
         try
         {
-            return System.Text.Json.JsonSerializer.Deserialize<object>(jsonString);
+            var options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+            
+            return System.Text.Json.JsonSerializer.Deserialize<object>(jsonString, options);
+        }
+        catch (System.Text.Json.JsonException)
+        {
+            return jsonString;
         }
         catch
         {
-            return jsonString; // Retorna como string se não conseguir deserializar
+            return jsonString;
         }
     }
-
     /// <summary>
     /// Obter processamento por ID
     /// </summary>
     /// <response code="200">Processamento encontrado com sucesso</response>
     /// <response code="404">Processamento não encontrado</response>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ProcessamentoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ProcessamentoResponse>> ObterProcessamento(int id)
+    public async Task<ActionResult> ObterProcessamento(int id)
     {
         var processamento = await _mediator.Send(new ObterProcessamentoQuery(id));
         if (processamento == null)
             return NotFound();
 
-        var response = new ProcessamentoResponse
+        var dadosEntrada = ObterJsonFormatado(processamento.DadosEntrada);
+        var dadosSaida = ObterJsonFormatado(processamento.DadosSaida);
+
+        var result = new
         {
-            Id = processamento.Id,
-            ScriptId = processamento.ScriptId,
-            DadosEntrada = ObterJsonFormatado(processamento.DadosEntrada),
-            DadosSaida = ObterJsonFormatado(processamento.DadosSaida),
-            MensagemErro = processamento.MensagemErro,
-            Status = processamento.Status.ToString(),
-            CriadoEm = processamento.CriadoEm,
-            IniciadoEm = processamento.IniciadoEm,
-            ConcluidoEm = processamento.ConcluidoEm,
-            Script = processamento.Script != null ? new ScriptResponse
-            {
-                Id = processamento.Script.Id,
-                Nome = processamento.Script.Nome,
-                Descricao = processamento.Script.Descricao,
-                Codigo = processamento.Script.Codigo,
-                CriadoEm = processamento.Script.CriadoEm,
-                AtualizadoEm = processamento.Script.AtualizadoEm
-            } : null
+            id = processamento.Id,
+            scriptId = processamento.ScriptId,
+            dadosEntrada = dadosEntrada,
+            dadosSaida = dadosSaida,
+            mensagemErro = processamento.MensagemErro,
+            status = processamento.Status.ToString(),
+            criadoEm = processamento.CriadoEm,
+            iniciadoEm = processamento.IniciadoEm,
+            concluidoEm = processamento.ConcluidoEm
         };
 
-        return Ok(response);
+        return Ok(result);
     }
 
     /// <summary>
@@ -150,18 +154,36 @@ public class ProcessamentosController : ControllerBase
     [ProducesResponseType(typeof(Processamento), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(object), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Processamento>> CriarProcessamento([FromBody] CriarProcessamentoRequest request)
+    public async Task<ActionResult<ProcessamentoResponse>> CriarProcessamento([FromBody] CriarProcessamentoRequest request)
     {
         try
         {
-            var comando = new CriarProcessamentoComando
+            var dadosEntradaString = request.DadosEntrada is string s
+                ? s
+                : JsonSerializer.Serialize(request.DadosEntrada);
+
+            var cmd = new CriarProcessamentoComando
             {
                 ScriptId = request.ScriptId,
-                DadosEntrada = request.DadosEntrada
+                DadosEntrada = dadosEntradaString
             };
 
-            var processamento = await _mediator.Send(comando);
-            return CreatedAtAction(nameof(ObterProcessamento), new { id = processamento.Id }, processamento);
+            var p = await _mediator.Send(cmd);
+
+            var resp = new ProcessamentoResponse
+            {
+                Id = p.Id,
+                ScriptId = p.ScriptId,
+                DadosEntrada = ParseJsonOrNull(p.DadosEntrada),
+                DadosSaida = ParseJsonOrNull(p.DadosSaida),
+                MensagemErro = p.MensagemErro,
+                Status = p.Status.ToString(),
+                CriadoEm = p.CriadoEm,
+                IniciadoEm = p.IniciadoEm,
+                ConcluidoEm = p.ConcluidoEm
+            };
+
+            return CreatedAtAction(nameof(ObterProcessamento), new { id = p.Id }, resp);
         }
         catch (InvalidOperationException ex)
         {
@@ -183,7 +205,15 @@ public class ProcessamentosController : ControllerBase
     {
         try
         {
-            var testDataPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "test-data");
+            // Caminho dentro do container Docker
+            var testDataPath = Path.Combine(Directory.GetCurrentDirectory(), "test-data");
+            
+            // Fallback para desenvolvimento local
+            if (!System.IO.Directory.Exists(testDataPath))
+            {
+                testDataPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "test-data");
+            }
+            
             if (!System.IO.Directory.Exists(testDataPath))
             {
                 return NotFound(new { error = "Pasta test-data não encontrada" });
@@ -223,7 +253,14 @@ public class ProcessamentosController : ControllerBase
         try
         {
             // Carregar dados de teste do arquivo
-            var dadosTestePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "test-data", "banco-central-payment-data.json");
+            var dadosTestePath = Path.Combine(Directory.GetCurrentDirectory(), "test-data", "banco-central-payment-data.json");
+            
+            // Fallback para desenvolvimento local
+            if (!System.IO.File.Exists(dadosTestePath))
+            {
+                dadosTestePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "test-data", "banco-central-payment-data.json");
+            }
+            
             if (!System.IO.File.Exists(dadosTestePath))
             {
                 return BadRequest(new { error = "Arquivo de dados de teste não encontrado" });
@@ -267,8 +304,15 @@ public class ProcessamentosController : ControllerBase
             }
 
             // Construir caminho do arquivo
-            var testDataPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "test-data");
+            var testDataPath = Path.Combine(Directory.GetCurrentDirectory(), "test-data");
             var dadosTestePath = Path.Combine(testDataPath, request.NomeArquivo);
+
+            // Fallback para desenvolvimento local
+            if (!System.IO.File.Exists(dadosTestePath))
+            {
+                testDataPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "test-data");
+                dadosTestePath = Path.Combine(testDataPath, request.NomeArquivo);
+            }
 
             // Validar se o arquivo existe
             if (!System.IO.File.Exists(dadosTestePath))
@@ -303,12 +347,25 @@ public class ProcessamentosController : ControllerBase
             return BadRequest(new { error = $"Erro ao processar arquivo: {ex.Message}" });
         }
     }
+    private static object? ParseJsonOrNull(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return null;
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            return doc.RootElement.Clone();
+        }
+        catch
+        {
+            return json;
+        }
+    }
 }
 
 public record CriarProcessamentoRequest
 {
     public int ScriptId { get; init; }
-    public string DadosEntrada { get; init; } = string.Empty;
+    public object? DadosEntrada { get; init; }
 }
 
 public record CriarProcessamentoTesteRequest
@@ -329,3 +386,4 @@ public class ArquivoTeste
     public long Tamanho { get; set; }
     public DateTime ModificadoEm { get; set; }
 }
+
